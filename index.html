@@ -20,11 +20,10 @@
         .post { background: #e6f7ff; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; border: 1px solid #d1e9ff; }
         .post:hover { transform: translateY(-5px); background: #d0f0fd; }
 
-        .create-post { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #d1e9ff; border-radius: 15px; background: #f9faff; position: relative; }
-        .create-post img { width: 40px; height: 40px; border-radius: 50%; }
-        .create-input { flex: 1; background: #eef3f8; border: none; padding: 0.8rem 1rem; border-radius: 15px; font-size: 1rem; outline: none; }
+        .create-post { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid #d1e9ff; border-radius: 15px; background: #f9faff; }
+        .create-input { width: 100%; background: #eef3f8; border: none; padding: 0.8rem 1rem; border-radius: 15px; font-size: 1rem; outline: none; }
         .create-input::placeholder { color: #777; }
-        .create-actions { display: flex; gap: 0.5rem; position: absolute; bottom: -45px; right: 10px; }
+        .create-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
         .create-btn { background: #4A90E2; color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
         .create-btn:hover { background: #50E3C2; }
 
@@ -49,13 +48,14 @@
 
     <div id="home" class="container active">
         <div class="create-post">
-            <img src="https://via.placeholder.com/40" alt="User">
-            <input type="text" class="create-input" id="post-content" placeholder="What's on your mind?">
+            <textarea class="create-input" id="post-content" placeholder="What's on your mind?"></textarea>
             <input type="file" id="post-image" accept="image/*" onchange="previewImage()" hidden>
-            <label for="post-image" class="create-btn">📷</label>
-            <button class="create-btn" onclick="createPost()">Post</button>
+            <div class="create-actions">
+                <label for="post-image" class="create-btn">📷 Upload Image</label>
+                <button class="create-btn" onclick="createPost()">Post</button>
+            </div>
+            <img id="image-preview" class="image-preview" style="display: none;">
         </div>
-        <img id="image-preview" class="image-preview" style="display: none;">
 
         <h2>Your Feed</h2>
         <div id="feed" class="feed"></div>
