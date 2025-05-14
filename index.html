@@ -58,7 +58,13 @@
         </div>
 
         <h2>Your Feed</h2>
-        <div id="feed" class="feed"></div>
+        <div id="feed" class="feed">
+            <div class="post">🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂"</div>
+            <div class="post">😎 "Edhaina jariginappudu... 'Chill bro, life is short' ani annadi."</div>
+            <div class="post">🤯 "Telangana lo undhi, but andhame undhi. Guess what?"</div>
+            <div class="post">😂 "Biryani without raitha? Edhi nijam kaadu!"</div>
+            <div class="post">🔥 "Success raadu waiting lo, reach cheyyali chasing lo."</div>
+        </div>
     </div>
 
     <footer>
@@ -88,38 +94,13 @@
                 const feed = document.getElementById('feed');
                 const post = document.createElement('div');
                 post.className = 'post';
-                post.innerHTML = `<p>${content}</p>${image ? `<img src='${image}' class='image-preview'>` : ''}
-                <div class='post-actions'>
-                    <span class='reaction-btn' onclick='react(this, "🔥")'>🔥 <span>0</span></span>
-                    <span class='reaction-btn' onclick='react(this, "😂")'>😂 <span>0</span></span>
-                    <span class='reaction-btn' onclick='react(this, "❤️")'>❤️ <span>0</span></span>
-                    <span class='reaction-btn' onclick='comment(this)'>💬 Comment</span>
-                    <span class='reaction-btn' onclick='sharePost(this)'>🔗 Share</span>
-                </div>
-                <div class='comments'></div>`;
+                post.innerHTML = `<p>${content}</p>${image ? `<img src='${image}' class='image-preview'>` : ''}`;
                 feed.prepend(post);
 
                 document.getElementById('post-content').value = '';
                 document.getElementById('image-preview').src = '';
                 document.getElementById('image-preview').style.display = 'none';
             }
-        }
-
-        function react(button, emoji) {
-            const count = button.querySelector('span');
-            count.textContent = parseInt(count.textContent) + 1;
-        }
-
-        function comment(button) {
-            const commentText = prompt('Enter your comment:');
-            if (commentText) {
-                const commentsSection = button.parentElement.nextElementSibling;
-                commentsSection.innerHTML += `<p>${commentText}</p>`;
-            }
-        }
-
-        function sharePost(button) {
-            alert('Post shared successfully!');
         }
     </script>
 </body>
