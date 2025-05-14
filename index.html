@@ -63,15 +63,12 @@
         <h2>Your Feed</h2>
         <div id="feed" class="feed">
             <div class="post">🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂"</div>
-            <div class="post">😂 "Biryani without raitha? Edhi nijam kaadu!"</div>
         </div>
     </div>
 
     <div id="explore" class="container">
         <h2>Explore Trending</h2>
-        <div class="feed">
-            <div class="post">#Trending - "Ela unna ra? Na life lo signal undhi but network ledu!" 😂🔥</div>
-        </div>
+        <div class="feed"><div class="post">#Trending - "Ela unna ra? Na life lo signal undhi but network ledu!" 😂🔥</div></div>
     </div>
 
     <div id="influencers" class="container">
@@ -111,10 +108,7 @@
 
         function createPost() { const content = document.getElementById('post-content').value.trim(); const image = document.getElementById('image-preview').src; const productLink = document.getElementById('post-product').value.trim(); if (content || image) { document.getElementById('feed').innerHTML += `<div class='post'>${content} ${image ? `<img src='${image}' class='image-preview'>` : ''} ${productLink ? `<a href='${productLink}' target='_blank' class='product-link'>View Product</a>` : ''}</div>`; document.getElementById('post-content').value = ''; document.getElementById('post-product').value = ''; document.getElementById('image-preview').src = ''; document.getElementById('image-preview').style.display = 'none'; } }
 
-        function requestPayout() { alert('Payout Requested!'); }
-        function editProfile() { const newName = prompt('Enter your new name:'); if (newName) document.querySelector('#profile p').textContent = '@' + newName + ' | 500 Followers | 1000 Coins Earned'; }
-
-        function previewImage() { const file = document.getElementById('post-image').files[0]; const preview = document.getElementById('image-preview'); if (file) { const reader = new FileReader(); reader.onload = function(e) { preview.src = e.target.result; preview.style.display = 'block'; } reader.readAsDataURL(file); } }
+        function previewImage() { const file = document.getElementById('post-image').files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { document.getElementById('image-preview').src = e.target.result; document.getElementById('image-preview').style.display = 'block'; } reader.readAsDataURL(file); } }
     </script>
 </body>
 </html>
