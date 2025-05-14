@@ -6,35 +6,32 @@
     <meta name="description" content="Earn money by sharing posts. Promote products, share posts, and track your earnings easily.">
     <title>AffiliateApp - Earn Money by Sharing Posts</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f9; color: #333; }
-        header { background: url('https://via.placeholder.com/1600x600/0073e6/fff?text=AffiliateApp+-+Earn+Money+by+Sharing+Posts') no-repeat center/cover; color: #fff; text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
-        header h1 { margin: 0; font-size: 3rem; animation: fadeIn 2s ease-in-out; }
-        header p { margin: 0.5rem 0; animation: fadeIn 2.5s ease-in-out; }
-        .cta-buttons { margin-top: 1rem; animation: fadeIn 3s ease-in-out; }
-        .cta-buttons a { background: #0073e6; color: #fff; padding: 0.7rem 1.2rem; text-decoration: none; border-radius: 5px; margin: 0 0.5rem; transition: transform 0.3s ease; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); color: #333; }
+        header { background: #0073e6; color: #fff; text-align: center; padding: 4rem 2rem; }
+        header h1 { margin: 0; font-size: 3rem; font-weight: 700; }
+        header p { margin: 0.5rem 0; font-size: 1.2rem; }
+        .cta-buttons { margin-top: 1rem; }
+        .cta-buttons a { background: #fff; color: #0073e6; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.3s ease; }
         .cta-buttons a:hover { transform: scale(1.05); }
 
-        section { padding: 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
-        section h2 { font-size: 2rem; margin-bottom: 1rem; }
+        section { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); margin-bottom: 2rem; }
+        section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #0073e6; }
 
         footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; }
 
         nav { background: #0073e6; padding: 1rem 0; text-align: center; }
-        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
+        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
         nav a:hover { color: #f4f4f9; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .button-primary { background: #28a745; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 5px; display: inline-block; margin: 1rem 0; transition: background 0.3s ease; }
+        .button-primary { background: #28a745; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 30px; display: inline-block; margin: 1rem 0; font-weight: 600; transition: background 0.3s ease; }
         .button-primary:hover { background: #218838; }
 
         .page { display: none; }
         .page.active { display: block; }
 
-        .back-button { background: #dc3545; color: #fff; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem; }
+        .back-button { background: #dc3545; color: #fff; padding: 0.5rem 1rem; text-decoration: none; border-radius: 30px; display: inline-block; margin-top: 1rem; font-weight: 600; }
         .back-button:hover { background: #c82333; }
 
-        img { width: 100%; max-width: 400px; height: auto; }
     </style>
     <script>
         function showPage(pageId) {
@@ -65,21 +62,18 @@
     <div id="signup" class="page">
         <h2>Sign Up</h2>
         <p>Join AffiliateApp and start earning money.</p>
-        <img src="https://via.placeholder.com/400x300/28a745/fff?text=Sign+Up+Image" alt="Sign Up">
         <a href="#promote" class="button-primary" onclick="showPage('promote')">Next: Promote Products</a>
     </div>
 
     <div id="promote" class="page">
         <h2>Promote Products</h2>
         <p>Select products and share them to earn money.</p>
-        <img src="https://via.placeholder.com/400x300/f39c12/fff?text=Promote+Products" alt="Promote">
         <a href="#earn" class="button-primary" onclick="showPage('earn')">Next: Earn Money</a>
     </div>
 
     <div id="earn" class="page">
         <h2>Earn Money</h2>
         <p>Track your earnings and request payouts.</p>
-        <img src="https://via.placeholder.com/400x300/0073e6/fff?text=Earn+Money" alt="Earn Money">
         <a href="#home" class="back-button" onclick="showPage('home')">Home</a>
     </div>
 
