@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Brandost - Social Media Platform">
-    <title>Brandost - Social Media Platform</title>
+    <title>Brandost - Brand New Social Media Experience</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f0f4f8; color: #333; }
@@ -21,13 +21,9 @@
         .post:hover { transform: translateY(-5px); background: #d0f0fd; }
 
         .create-post { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; border: 1px solid #d1e9ff; border-radius: 15px; background: #f9faff; }
-        .create-input { width: 100%; background: #eef3f8; border: none; padding: 0.8rem 1rem; border-radius: 15px; font-size: 1rem; outline: none; }
-        .create-input::placeholder { color: #777; }
         .create-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
         .create-btn { background: #4A90E2; color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
         .create-btn:hover { background: #50E3C2; }
-
-        .image-preview { max-width: 100%; margin-top: 10px; border-radius: 10px; }
 
         footer { background: #4A90E2; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
     </style>
@@ -47,24 +43,56 @@
     </nav>
 
     <div id="home" class="container active">
+        <h2>Create a Post</h2>
         <div class="create-post">
             <textarea class="create-input" id="post-content" placeholder="What's on your mind?"></textarea>
-            <input type="file" id="post-image" accept="image/*" onchange="previewImage()" hidden>
             <div class="create-actions">
-                <label for="post-image" class="create-btn">📷 Upload Image</label>
                 <button class="create-btn" onclick="createPost()">Post</button>
             </div>
-            <img id="image-preview" class="image-preview" style="display: none;">
         </div>
-
         <h2>Your Feed</h2>
         <div id="feed" class="feed">
             <div class="post">🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂"</div>
-            <div class="post">😎 "Edhaina jariginappudu... 'Chill bro, life is short' ani annadi."</div>
-            <div class="post">🤯 "Telangana lo undhi, but andhame undhi. Guess what?"</div>
-            <div class="post">😂 "Biryani without raitha? Edhi nijam kaadu!"</div>
-            <div class="post">🔥 "Success raadu waiting lo, reach cheyyali chasing lo."</div>
         </div>
+    </div>
+
+    <div id="explore" class="container">
+        <h2>Explore Trending</h2>
+        <div class="feed">
+            <div class="post">#Trending - "Biryani without raitha? Edhi nijam kaadu!" 😂🔥</div>
+            <div class="post">#Motivation - "Success raadu waiting lo, reach cheyyali chasing lo." 💪🔥</div>
+        </div>
+    </div>
+
+    <div id="influencers" class="container">
+        <h2>Top Influencers</h2>
+        <div class="post">@Meme_Maniac - 50,000 followers | 🔥 Viral King</div>
+        <div class="post">@Telugu_Trends - 30,000 followers | 😂 Humor Queen</div>
+    </div>
+
+    <div id="chats" class="container">
+        <h2>Your Chats</h2>
+        <div class="post">@FriendOne - "Bro, Netflix and chill aa?" 😂</div>
+        <div class="post">@FriendTwo - "Edho oka business idea undi..." 💡</div>
+    </div>
+
+    <div id="groups" class="container">
+        <h2>Your Groups</h2>
+        <div class="post">Telugu Memes Community - 10K Members 😂🔥</div>
+        <div class="post">Startup Hustlers - 5K Members 💡🚀</div>
+    </div>
+
+    <div id="earn" class="container">
+        <h2>Earn Money</h2>
+        <p>Your Coins: <span id="coin-count">1000</span> Coins</p>
+        <button onclick="requestPayout()">Request Payout</button>
+        <div id="history">Recent Payouts: ₹100, ₹50</div>
+    </div>
+
+    <div id="profile" class="container">
+        <h2>Your Profile</h2>
+        <p>@YourName | 500 Followers | 1000 Coins Earned</p>
+        <button onclick="editProfile()">Edit Profile</button>
     </div>
 
     <footer>
@@ -72,35 +100,24 @@
     </footer>
 
     <script>
-        function previewImage() {
-            const file = document.getElementById('post-image').files[0];
-            const preview = document.getElementById('image-preview');
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
         function createPost() {
             const content = document.getElementById('post-content').value.trim();
-            const image = document.getElementById('image-preview').src;
-
-            if (content || image) {
-                const feed = document.getElementById('feed');
-                const post = document.createElement('div');
-                post.className = 'post';
-                post.innerHTML = `<p>${content}</p>${image ? `<img src='${image}' class='image-preview'>` : ''}`;
-                feed.prepend(post);
-
+            if (content) {
+                document.getElementById('feed').innerHTML += `<div class='post'>${content}</div>`;
                 document.getElementById('post-content').value = '';
-                document.getElementById('image-preview').src = '';
-                document.getElementById('image-preview').style.display = 'none';
             }
+        }
+
+        function requestPayout() { alert('Payout Requested!'); }
+
+        function editProfile() {
+            const newName = prompt('Enter your new name:');
+            if (newName) document.querySelector('#profile p').textContent = '@' + newName + ' | 500 Followers | 1000 Coins Earned';
         }
     </script>
 </body>
