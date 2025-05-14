@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brandost - Earn Money by Sharing Posts">
+    <title>Brandost - Earn Money</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #333; }
+        nav { background: #0073e6; padding: 1rem; text-align: center; display: flex; justify-content: center; align-items: center; }
+        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; }
+        nav a:hover { color: #d4d4d8; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; margin-right: auto; }
+
+        .container { max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .section { background: #e0f2fe; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; margin-bottom: 1rem; }
+        .section:hover { transform: translateY(-5px); }
+
+        .coin-display { font-size: 1.2rem; font-weight: 700; text-align: center; margin-top: 1rem; }
+        .button-primary { background: #0073e6; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 15px; display: inline-block; transition: background 0.3s ease; }
+        .button-primary:hover { background: #005bb5; }
+
+        footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Brandost</div>
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn Money</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+
+    <div class="container">
+        <h2>Earn Money</h2>
+        <div class="section">
+            <p>Your Coins: <span id="coin-count">0</span> Coins</p>
+            <p>1 Coin = ₹0.10</p>
+            <button class="button-primary" onclick="requestPayout()">Request Payout</button>
+        </div>
+
+        <h2>Your Earnings History</h2>
+        <div class="section" id="history">
+            <p>No payout requests yet.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Brandost. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let coins = 1000; // Example starting coins
+
+        document.getElementById('coin-count').innerText = coins;
+
+        function requestPayout() {
+            if (coins >= 100) { // Minimum 100 coins for payout
+                const payoutAmount = (coins * 0.10).toFixed(2);
+                coins = 0;
+                document.getElementById('coin-count').innerText = coins;
+                const history = document.getElementById('history');
+                history.innerHTML = `<p>Payout Requested: ₹${payoutAmount} (Processed)</p>` + history.innerHTML;
+                alert('Payout requested successfully!');
+            } else {
+                alert('You need at least 100 coins to request a payout.');
+            }
+        }
+    </script>
+</body>
+</html>
