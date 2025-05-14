@@ -3,31 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Brandost - Earn Money by Sharing Posts">
-    <title>Brandost - Home</title>
+    <meta name="description" content="Brandost - Social Media Platform">
+    <title>Brandost - Social Media Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #333; }
-        nav { background: #0073e6; padding: 1rem; text-align: center; display: flex; justify-content: center; align-items: center; }
-        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; }
+        nav { background: #0073e6; padding: 1rem; text-align: center; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; cursor: pointer; }
         nav a:hover { color: #d4d4d8; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; margin-right: auto; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
 
-        .container { max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
-        .feed { display: flex; flex-direction: column; gap: 1rem; }
-        .post { background: #e0f2fe; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; }
-        .post:hover { transform: translateY(-5px); }
-        .post-header { display: flex; justify-content: space-between; }
-        .post-user { font-weight: 700; color: #0073e6; }
-        .post-content { margin-top: 0.5rem; font-size: 0.95rem; }
-        .post-actions { margin-top: 0.5rem; display: flex; justify-content: space-between; }
-        .like-button, .comment-button, .share-button { background: #0073e6; color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
-        .like-button:hover, .comment-button:hover, .share-button:hover { background: #005bb5; }
+        .container { max-width: 800px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); display: none; }
+        .container.active { display: block; }
 
-        .create-post { display: flex; flex-direction: column; gap: 0.5rem; }
-        .create-post input { padding: 0.8rem; border: 1px solid #ddd; border-radius: 15px; }
-        .create-post button { background: #0073e6; color: #fff; border: none; padding: 0.7rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
-        .create-post button:hover { background: #005bb5; }
+        .feed, .section { display: flex; flex-direction: column; gap: 1rem; }
+        .post, .group, .chat, .influencer { background: #e0f2fe; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; }
+        .post:hover, .group:hover, .chat:hover, .influencer:hover { transform: translateY(-5px); }
 
         footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
     </style>
@@ -35,35 +26,58 @@
 <body>
     <nav>
         <div class="logo">Brandost</div>
-        <a href="index.html">Home</a>
-        <a href="earn.html">Earn Money</a>
-        <a href="profile.html">Profile</a>
+        <div>
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('explore')">Explore</a>
+            <a onclick="showPage('influencers')">Influencers</a>
+            <a onclick="showPage('chats')">Chats</a>
+            <a onclick="showPage('groups')">Groups</a>
+            <a onclick="showPage('earn')">Earn Money</a>
+            <a onclick="showPage('profile')">Profile</a>
+        </div>
     </nav>
 
-    <div class="container">
+    <div id="home" class="container active">
         <h2>Create a Post</h2>
-        <div class="create-post">
-            <input type="text" id="post-content" placeholder="What's on your mind?">
-            <button onclick="createPost()">Post</button>
+        <div class="feed">
+            <div class="post">Welcome to Brandost! Share your thoughts and earn.</div>
         </div>
+    </div>
 
-        <h2>Your Feed</h2>
-        <div id="feed" class="feed">
-            <div class="post">
-                <div class="post-header">
-                    <span class="post-user">@JohnDoe</span>
-                    <span>💰 +5 Coins</span>
-                </div>
-                <div class="post-content">Welcome to Brandost! Share your thoughts and earn.</div>
-                <div class="post-actions">
-                    <button class="like-button" onclick="addCoins(2)">❤️ Like +2</button>
-                    <button class="comment-button">💬 Comment</button>
-                    <button class="share-button" onclick="addCoins(3)">🔗 Share +3</button>
-                </div>
-            </div>
+    <div id="explore" class="container">
+        <h2>Explore Trending</h2>
+        <div class="feed">
+            <div class="post">#Trending - Exciting new posts here!</div>
+            <div class="post">#Tech - Latest gadgets and innovations.</div>
         </div>
+    </div>
 
-        <div class="coin-display">Your Coins: <span id="coin-count">0 Coins</span></div>
+    <div id="influencers" class="container">
+        <h2>Top Influencers</h2>
+        <div class="influencer">@InfluencerOne - 10,000 followers</div>
+    </div>
+
+    <div id="chats" class="container">
+        <h2>Your Chats</h2>
+        <div class="chat">@FriendOne - Hey, how are you?</div>
+    </div>
+
+    <div id="groups" class="container">
+        <h2>Your Groups</h2>
+        <div class="group">Travel Enthusiasts</div>
+    </div>
+
+    <div id="earn" class="container">
+        <h2>Earn Money</h2>
+        <p>Your Coins: <span id="coin-count">0</span> Coins</p>
+        <button onclick="requestPayout()">Request Payout</button>
+        <div id="history"></div>
+    </div>
+
+    <div id="profile" class="container">
+        <h2>Profile</h2>
+        <p>@YourName</p>
+        <button onclick="editProfile()">Edit Profile</button>
     </div>
 
     <footer>
@@ -71,33 +85,28 @@
     </footer>
 
     <script>
-        let coins = 0;
-
-        function addCoins(amount) {
-            coins += amount;
-            document.getElementById('coin-count').innerText = coins + ' Coins';
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
         }
 
-        function createPost() {
-            const content = document.getElementById('post-content').value;
-            if(content.trim() !== '') {
-                const feed = document.getElementById('feed');
-                const post = document.createElement('div');
-                post.className = 'post';
-                post.innerHTML = `
-                    <div class="post-header">
-                        <span class="post-user">@You</span>
-                        <span onclick="addCoins(5)">💰 +5 Coins</span>
-                    </div>
-                    <div class="post-content">${content}</div>
-                    <div class="post-actions">
-                        <button class="like-button" onclick="addCoins(2)">❤️ Like +2</button>
-                        <button class="comment-button">💬 Comment</button>
-                        <button class="share-button" onclick="addCoins(3)">🔗 Share +3</button>
-                    </div>
-                `;
-                feed.prepend(post);
-                document.getElementById('post-content').value = '';
+        let coins = 1000;
+        document.getElementById('coin-count').innerText = coins;
+
+        function requestPayout() {
+            if (coins >= 100) {
+                coins -= 100;
+                document.getElementById('coin-count').innerText = coins;
+                document.getElementById('history').innerHTML += `<p>Payout Requested - 100 Coins</p>`;
+            } else {
+                alert('You need at least 100 coins to request a payout.');
+            }
+        }
+
+        function editProfile() {
+            let newName = prompt('Enter your new name:');
+            if (newName) {
+                document.querySelector('#profile p').innerText = '@' + newName;
             }
         }
     </script>
