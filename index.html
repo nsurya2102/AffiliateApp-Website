@@ -6,104 +6,91 @@
     <meta name="description" content="Earn money by sharing posts. Promote products, share posts, and track your earnings easily.">
     <title>AffiliateApp - Earn Money by Sharing Posts</title>
     <style>
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); color: #333; }
-        header { background: #0073e6; color: #fff; text-align: center; padding: 4rem 2rem; }
-        header h1 { margin: 0; font-size: 3rem; font-weight: 700; }
-        header p { margin: 0.5rem 0; font-size: 1.2rem; }
-        .cta-buttons { margin-top: 1rem; }
-        .cta-buttons a { background: #fff; color: #0073e6; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 30px; font-weight: 600; transition: transform 0.3s ease; }
-        .cta-buttons a:hover { transform: scale(1.05); }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #333; }
+        nav { background: #0073e6; padding: 1rem; text-align: center; }
+        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; }
+        nav a:hover { color: #d4d4d8; }
 
-        section { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; background: #fff; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); margin-bottom: 2rem; }
-        section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #0073e6; }
+        .container { max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .feed { display: flex; flex-direction: column; gap: 1rem; }
+        .post { background: #e0f2fe; padding: 1rem; border-radius: 15px; }
+        .post-header { display: flex; justify-content: space-between; }
+        .post-user { font-weight: 700; color: #0073e6; }
+        .post-content { margin-top: 0.5rem; font-size: 0.95rem; }
+        .post-actions { margin-top: 0.5rem; display: flex; justify-content: space-between; }
+        .like-button, .comment-button, .share-button { background: #0073e6; color: #fff; border: none; padding: 0.4rem 0.8rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
+        .like-button:hover, .comment-button:hover, .share-button:hover { background: #005bb5; }
 
-        footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; }
+        .coin-display { font-size: 1rem; font-weight: 700; text-align: center; margin-top: 1rem; }
 
-        nav { background: #0073e6; padding: 1rem 0; text-align: center; }
-        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
-        nav a:hover { color: #f4f4f9; }
-
-        .button-primary { background: #28a745; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 30px; display: inline-block; margin: 1rem 0; font-weight: 600; transition: background 0.3s ease; }
-        .button-primary:hover { background: #218838; }
-
-        .feed { display: flex; flex-wrap: wrap; gap: 1rem; }
-        .post { background: #f9f9f9; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: calc(33% - 1rem); }
-        .post img { width: 100%; border-radius: 10px; }
-        .post p { margin: 0.5rem 0; font-size: 1rem; }
-
-        .coin-display { font-size: 1.2rem; font-weight: 700; margin: 1rem 0; }
+        .create-post { display: flex; flex-direction: column; gap: 0.5rem; }
+        .create-post input { padding: 0.8rem; border: 1px solid #ddd; border-radius: 15px; }
+        .create-post button { background: #0073e6; color: #fff; border: none; padding: 0.7rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
+        .create-post button:hover { background: #005bb5; }
     </style>
     <script>
         let coins = 0;
 
         function addCoins(amount) {
             coins += amount;
-            document.getElementById('coin-count').innerText = coins;
+            document.getElementById('coin-count').innerText = coins + ' Coins';
         }
 
-        function login() {
-            const name = document.getElementById('username').value;
-            if(name) {
-                document.getElementById('welcome').innerText = 'Welcome, ' + name + '!';
-                showPage('promote');
+        function createPost() {
+            const content = document.getElementById('post-content').value;
+            if(content.trim() !== '') {
+                const feed = document.getElementById('feed');
+                const post = document.createElement('div');
+                post.className = 'post';
+                post.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-user">@You</span>
+                        <span onclick="addCoins(5)">💰 +5 Coins</span>
+                    </div>
+                    <div class="post-content">${content}</div>
+                    <div class="post-actions">
+                        <button class="like-button" onclick="addCoins(2)">❤️ Like +2</button>
+                        <button class="comment-button">💬 Comment</button>
+                        <button class="share-button" onclick="addCoins(3)">🔗 Share +3</button>
+                    </div>
+                `;
+                feed.prepend(post);
+                document.getElementById('post-content').value = '';
             }
-        }
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
         }
     </script>
 </head>
 <body>
     <nav>
-        <a href="#home" onclick="showPage('home')">Home</a>
-        <a href="#signup" onclick="showPage('signup')">Sign Up / Login</a>
-        <a href="#promote" onclick="showPage('promote')">Promote Products</a>
-        <a href="#earn" onclick="showPage('earn')">Earn Money</a>
-        <a href="#contact" onclick="showPage('contact')">Contact</a>
+        <a href="#home">Home</a>
+        <a href="#earn">Earn Money</a>
+        <a href="#profile">Profile</a>
     </nav>
 
-    <div id="home" class="page active">
-        <header>
-            <h1>AffiliateApp</h1>
-            <p>Earn Money by Sharing Posts</p>
-            <div class="cta-buttons">
-                <a href="#signup" onclick="showPage('signup')">Get Started</a>
-            </div>
-        </header>
-    </div>
-
-    <div id="signup" class="page">
-        <h2>Sign Up / Login</h2>
-        <input type="text" id="username" placeholder="Enter your name">
-        <button onclick="login()">Login</button>
-        <p id="welcome"></p>
-    </div>
-
-    <div id="promote" class="page">
-        <h2>Promote Products</h2>
-        <div class="feed">
-            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 1</p><button onclick="addCoins(10)">Share + Earn 10 Coins</button></div>
-            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 2</p><button onclick="addCoins(15)">Share + Earn 15 Coins</button></div>
-            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 3</p><button onclick="addCoins(20)">Share + Earn 20 Coins</button></div>
+    <div class="container">
+        <h2>Create a Post</h2>
+        <div class="create-post">
+            <input type="text" id="post-content" placeholder="What's on your mind?">
+            <button onclick="createPost()">Post</button>
         </div>
-    </div>
 
-    <div id="earn" class="page">
-        <h2>Earn Money</h2>
-        <p class="coin-display">Your Coins: <span id="coin-count">0</span></p>
-        <p>Use your coins to request payouts.</p>
-    </div>
+        <h2>Your Feed</h2>
+        <div id="feed" class="feed">
+            <div class="post">
+                <div class="post-header">
+                    <span class="post-user">@JohnDoe</span>
+                    <span>💰 +5 Coins</span>
+                </div>
+                <div class="post-content">This is an example post. Start creating your own posts!</div>
+                <div class="post-actions">
+                    <button class="like-button" onclick="addCoins(2)">❤️ Like +2</button>
+                    <button class="comment-button">💬 Comment</button>
+                    <button class="share-button" onclick="addCoins(3)">🔗 Share +3</button>
+                </div>
+            </div>
+        </div>
 
-    <div id="contact" class="page">
-        <h2>Contact Us</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message"></textarea>
-            <button type="submit">Send Message</button>
-        </form>
+        <div class="coin-display">Your Coins: <span id="coin-count">0 Coins</span></div>
     </div>
 
     <footer>
