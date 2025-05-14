@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brandost - Profile Page">
+    <title>Brandost - Profile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #333; }
+        nav { background: #0073e6; padding: 1rem; text-align: center; display: flex; justify-content: center; align-items: center; }
+        nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; }
+        nav a:hover { color: #d4d4d8; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; margin-right: auto; }
+
+        .container { max-width: 600px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .profile-info { text-align: center; margin-bottom: 1rem; }
+        .profile-info img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0073e6; }
+        .profile-info h2 { margin: 0.5rem 0; color: #0073e6; }
+
+        .button-primary { background: #0073e6; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 15px; transition: background 0.3s ease; }
+        .button-primary:hover { background: #005bb5; }
+
+        footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Brandost</div>
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn Money</a>
+        <a href="profile.html">Profile</a>
+    </nav>
+
+    <div class="container">
+        <div class="profile-info">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profile-pic">
+            <h2 id="profile-name">@YourName</h2>
+            <input type="text" id="edit-name" placeholder="Edit Name" style="display: none;">
+            <button class="button-primary" onclick="toggleEdit()">Edit Profile</button>
+        </div>
+
+        <h2>Your Posts</h2>
+        <div id="post-history">
+            <p>No posts yet.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Brandost. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleEdit() {
+            const nameField = document.getElementById('edit-name');
+            const nameDisplay = document.getElementById('profile-name');
+
+            if (nameField.style.display === 'none') {
+                nameField.style.display = 'block';
+                nameField.value = nameDisplay.textContent.replace('@', '');
+            } else {
+                nameDisplay.textContent = '@' + nameField.value;
+                nameField.style.display = 'none';
+            }
+        }
+
+        // Example Posts
+        const postHistory = document.getElementById('post-history');
+        postHistory.innerHTML = `
+            <div><p>@You: Just joined Brandost!</p></div>
+            <div><p>@You: Shared a new post and earned 5 coins!</p></div>
+        `;
+    </script>
+</body>
+</html>
