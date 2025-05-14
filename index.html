@@ -20,14 +20,22 @@
         .post { background: #e6f7ff; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; border: 1px solid #d1e9ff; }
         .post:hover { transform: translateY(-5px); background: #d0f0fd; }
 
-        .post-actions { display: flex; justify-content: space-between; margin-top: 0.5rem; }
-        .reaction-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 5px; }
-        .reaction-btn:hover { transform: scale(1.2); }
-
         footer { background: #4A90E2; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
     </style>
 </head>
-<body onload="checkLogin()">
+<body onload="showPage('home')">
+    <nav>
+        <div class="logo">Brandost</div>
+        <div>
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('explore')">Explore</a>
+            <a onclick="showPage('influencers')">Influencers</a>
+            <a onclick="showPage('chats')">Chats</a>
+            <a onclick="showPage('groups')">Groups</a>
+            <a onclick="showPage('earn')">Earn Money</a>
+            <a onclick="showPage('profile')">Profile</a>
+        </div>
+    </nav>
 
     <div id="home" class="container active">
         <h2>Create a Post</h2>
@@ -35,9 +43,46 @@
             <input type="text" id="post-content" placeholder="What's on your mind?">
             <button onclick="createPost()">Post</button>
         </div>
-
         <h2>Your Feed</h2>
         <div id="feed" class="feed"></div>
+    </div>
+
+    <div id="explore" class="container">
+        <h2>Explore Trending</h2>
+        <div class="feed">
+            <div class="post">#Trending - Exciting new posts here!</div>
+            <div class="post">#Tech - Latest gadgets and innovations.</div>
+        </div>
+    </div>
+
+    <div id="influencers" class="container">
+        <h2>Top Influencers</h2>
+        <div class="post">@InfluencerOne - 10,000 followers</div>
+        <div class="post">@InfluencerTwo - 7,500 followers</div>
+    </div>
+
+    <div id="chats" class="container">
+        <h2>Your Chats</h2>
+        <div class="post">@FriendOne - Hey, how are you?</div>
+    </div>
+
+    <div id="groups" class="container">
+        <h2>Your Groups</h2>
+        <div class="post">Travel Enthusiasts</div>
+        <div class="post">Food Lovers</div>
+    </div>
+
+    <div id="earn" class="container">
+        <h2>Earn Money</h2>
+        <p>Your Coins: <span id="coin-count">1000</span> Coins</p>
+        <button onclick="requestPayout()">Request Payout</button>
+        <div id="history"></div>
+    </div>
+
+    <div id="profile" class="container">
+        <h2>Profile</h2>
+        <p>@YourName</p>
+        <button onclick="editProfile()">Edit Profile</button>
     </div>
 
     <footer>
@@ -45,49 +90,31 @@
     </footer>
 
     <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
         function createPost() {
             const content = document.getElementById('post-content').value.trim();
             if (content) {
-                const post = {
-                    content: content,
-                    reactions: { "🔥": 0, "😂": 0, "❤️": 0, "😎": 0, "🤯": 0 }
-                };
-                addPostToFeed(post);
+                const feed = document.getElementById('feed');
+                const post = document.createElement('div');
+                post.className = 'post';
+                post.innerHTML = `<p>${content}</p>`;
+                feed.prepend(post);
                 document.getElementById('post-content').value = '';
             }
         }
 
-        function addPostToFeed(post) {
-            const feed = document.getElementById('feed');
-            const postElement = document.createElement('div');
-            postElement.className = 'post';
-            postElement.innerHTML = `
-                <p>${post.content}</p>
-                <div class="post-actions">
-                    <button class="reaction-btn" onclick="react(this, '🔥')">🔥 <span>0</span></button>
-                    <button class="reaction-btn" onclick="react(this, '😂')">😂 <span>0</span></button>
-                    <button class="reaction-btn" onclick="react(this, '❤️')">❤️ <span>0</span></button>
-                    <button class="reaction-btn" onclick="react(this, '😎')">😎 <span>0</span></button>
-                    <button class="reaction-btn" onclick="react(this, '🤯')">🤯 <span>0</span></button>
-                </div>
-                <div class="comments" style="margin-top: 0.5rem;"></div>
-            `;
-            feed.prepend(postElement);
+        function requestPayout() {
+            alert('Payout Requested!');
         }
 
-        function react(button, emoji) {
-            const count = button.querySelector('span');
-            count.textContent = parseInt(count.textContent) + 1;
+        function editProfile() {
+            const newName = prompt('Enter your new name:');
+            if (newName) document.querySelector('#profile p').textContent = '@' + newName;
         }
-
-        // Sample Posts
-        const samplePosts = [
-            { content: "Just joined Brandost! Loving the vibes here.🔥", reactions: { "🔥": 5, "😂": 2, "❤️": 3, "😎": 1, "🤯": 0 } },
-            { content: "Anyone up for a chat? 😎", reactions: { "🔥": 3, "😂": 1, "❤️": 4, "😎": 2, "🤯": 1 } }
-        ];
-
-        samplePosts.forEach(post => addPostToFeed(post));
-
     </script>
 </body>
 </html>
