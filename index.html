@@ -20,11 +20,15 @@
         .post { background: #e6f7ff; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; border: 1px solid #d1e9ff; }
         .post:hover { transform: translateY(-5px); background: #d0f0fd; }
 
-        .reaction-btn { background: none; border: none; cursor: pointer; font-size: 1rem; margin-right: 5px; }
-        .reaction-btn:hover { transform: scale(1.2); }
+        .create-post { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #d1e9ff; border-radius: 15px; background: #f9faff; position: relative; }
+        .create-post img { width: 40px; height: 40px; border-radius: 50%; }
+        .create-input { flex: 1; background: #eef3f8; border: none; padding: 0.8rem 1rem; border-radius: 15px; font-size: 1rem; outline: none; }
+        .create-input::placeholder { color: #777; }
+        .create-actions { display: flex; gap: 0.5rem; position: absolute; bottom: -45px; right: 10px; }
+        .create-btn { background: #4A90E2; color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 15px; cursor: pointer; transition: background 0.3s ease; }
+        .create-btn:hover { background: #50E3C2; }
 
-        .product-link { color: #4A90E2; text-decoration: underline; cursor: pointer; }
-        .post-actions { display: flex; justify-content: space-between; margin-top: 0.5rem; }
+        .image-preview { max-width: 100%; margin-top: 10px; border-radius: 10px; }
 
         footer { background: #4A90E2; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
     </style>
@@ -44,27 +48,17 @@
     </nav>
 
     <div id="home" class="container active">
-        <h2>Create a Post</h2>
         <div class="create-post">
-            <input type="text" id="post-content" placeholder="What's on your mind?">
-            <input type="text" id="post-product" placeholder="Add product link (optional)">
-            <button onclick="createPost()">Post</button>
+            <img src="https://via.placeholder.com/40" alt="User">
+            <input type="text" class="create-input" id="post-content" placeholder="What's on your mind?">
+            <input type="file" id="post-image" accept="image/*" onchange="previewImage()" hidden>
+            <label for="post-image" class="create-btn">📷</label>
+            <button class="create-btn" onclick="createPost()">Post</button>
         </div>
+        <img id="image-preview" class="image-preview" style="display: none;">
+
         <h2>Your Feed</h2>
-        <div id="feed" class="feed">
-            <div class="post">
-                <p>🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂"</p>
-                <div class="post-actions">
-                    <span class="reaction-btn" onclick="react(this, '🔥')">🔥 <span>10</span></span>
-                    <span class="reaction-btn" onclick="react(this, '😂')">😂 <span>20</span></span>
-                    <span class="reaction-btn" onclick="react(this, '❤️')">❤️ <span>15</span></span>
-                    <a href="#" class="product-link">View Product</a>
-                    <span class="reaction-btn" onclick="comment(this)">💬 Comment</span>
-                    <span class="reaction-btn" onclick="sharePost(this)">🔗 Share</span>
-                </div>
-                <div class="comments"></div>
-            </div>
-        </div>
+        <div id="feed" class="feed"></div>
     </div>
 
     <footer>
@@ -72,31 +66,42 @@
     </footer>
 
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+        function previewImage() {
+            const file = document.getElementById('post-image').files[0];
+            const preview = document.getElementById('image-preview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
         }
 
         function createPost() {
             const content = document.getElementById('post-content').value.trim();
-            const product = document.getElementById('post-product').value.trim();
-            if (content) {
+            const image = document.getElementById('image-preview').src;
+
+            if (content || image) {
                 const feed = document.getElementById('feed');
                 const post = document.createElement('div');
                 post.className = 'post';
-                post.innerHTML = `<p>${content}</p>
+                post.innerHTML = `<p>${content}</p>${image ? `<img src='${image}' class='image-preview'>` : ''}
                 <div class='post-actions'>
                     <span class='reaction-btn' onclick='react(this, "🔥")'>🔥 <span>0</span></span>
                     <span class='reaction-btn' onclick='react(this, "😂")'>😂 <span>0</span></span>
                     <span class='reaction-btn' onclick='react(this, "❤️")'>❤️ <span>0</span></span>
-                    ${product ? `<a href='${product}' class='product-link' target='_blank'>View Product</a>` : ''}
                     <span class='reaction-btn' onclick='comment(this)'>💬 Comment</span>
                     <span class='reaction-btn' onclick='sharePost(this)'>🔗 Share</span>
                 </div>
                 <div class='comments'></div>`;
                 feed.prepend(post);
+
                 document.getElementById('post-content').value = '';
-                document.getElementById('post-product').value = '';
+                document.getElementById('image-preview').src = '';
+                document.getElementById('image-preview').style.display = 'none';
             }
         }
 
