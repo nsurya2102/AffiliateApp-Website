@@ -62,11 +62,8 @@
 
         <h2>Your Feed</h2>
         <div id="feed" class="feed">
-            <div class="post">🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂" <a href="#" class="product-link">View Product</a></div>
-            <div class="post">😎 "Edhaina jariginappudu... 'Chill bro, life is short' ani annadi."</div>
-            <div class="post">🤯 "Telangana lo undhi, but andhame undhi. Guess what?"</div>
+            <div class="post">🔥 "Nee girlfriend naku cheppindi... But I didn't believe her. 😂"</div>
             <div class="post">😂 "Biryani without raitha? Edhi nijam kaadu!"</div>
-            <div class="post">🔥 "Success raadu waiting lo, reach cheyyali chasing lo."</div>
         </div>
     </div>
 
@@ -74,28 +71,35 @@
         <h2>Explore Trending</h2>
         <div class="feed">
             <div class="post">#Trending - "Ela unna ra? Na life lo signal undhi but network ledu!" 😂🔥</div>
-            <div class="post">#Motivation - "Prathi failure taruvatha success, but ela fastforward chestham?" 💪🔥</div>
-            <div class="post">#Love - "Muddulu tho start... Blocklist tho end." ❤️😂</div>
         </div>
     </div>
 
     <div id="influencers" class="container">
         <h2>Top Influencers</h2>
         <div class="post">@Meme_Maniac - 50,000 followers | 🔥 Viral King</div>
-        <div class="post">@Tech_Guru - 30,000 followers | 🤯 Tech Expert</div>
-        <div class="post">@Fashion_Star - 25,000 followers | 😎 Style Icon</div>
     </div>
 
     <div id="chats" class="container">
         <h2>Your Chats</h2>
         <div class="post">@FriendOne - "Bro, Netflix and chill aa?" 😂</div>
-        <div class="post">@FriendTwo - "Edho oka business idea undi..." 💡</div>
     </div>
 
     <div id="groups" class="container">
         <h2>Your Groups</h2>
         <div class="post">Telugu Memes Community - 10K Members 😂🔥</div>
-        <div class="post">Travel Enthusiasts - 8K Members 😎✈️</div>
+    </div>
+
+    <div id="earn" class="container">
+        <h2>Earn Money</h2>
+        <p>Your Coins: <span id="coin-count">1000</span> Coins</p>
+        <button onclick="requestPayout()">Request Payout</button>
+        <div id="history">Recent Payouts: ₹100, ₹50</div>
+    </div>
+
+    <div id="profile" class="container">
+        <h2>Your Profile</h2>
+        <p>@YourName | 500 Followers | 1000 Coins Earned</p>
+        <button onclick="editProfile()">Edit Profile</button>
     </div>
 
     <footer>
@@ -103,24 +107,14 @@
     </footer>
 
     <script>
-        function previewImage() {
-            const file = document.getElementById('post-image').files[0];
-            const preview = document.getElementById('image-preview');
-            if (file) { const reader = new FileReader(); reader.onload = function(e) { preview.src = e.target.result; preview.style.display = 'block'; } reader.readAsDataURL(file); }
-        }
+        function showPage(pageId) { document.querySelectorAll('.container').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); }
 
-        function createPost() {
-            const content = document.getElementById('post-content').value.trim();
-            const image = document.getElementById('image-preview').src;
-            const productLink = document.getElementById('post-product').value.trim();
-            if (content || image) { const feed = document.getElementById('feed');
-                const post = document.createElement('div');
-                post.className = 'post';
-                post.innerHTML = `<p>${content}</p>${image ? `<img src='${image}' class='image-preview'>` : ''}
-                ${productLink ? `<a href='${productLink}' target='_blank' class='product-link'>View Product</a>` : ''}`;
-                feed.prepend(post);
-            }
-        }
+        function createPost() { const content = document.getElementById('post-content').value.trim(); const image = document.getElementById('image-preview').src; const productLink = document.getElementById('post-product').value.trim(); if (content || image) { document.getElementById('feed').innerHTML += `<div class='post'>${content} ${image ? `<img src='${image}' class='image-preview'>` : ''} ${productLink ? `<a href='${productLink}' target='_blank' class='product-link'>View Product</a>` : ''}</div>`; document.getElementById('post-content').value = ''; document.getElementById('post-product').value = ''; document.getElementById('image-preview').src = ''; document.getElementById('image-preview').style.display = 'none'; } }
+
+        function requestPayout() { alert('Payout Requested!'); }
+        function editProfile() { const newName = prompt('Enter your new name:'); if (newName) document.querySelector('#profile p').textContent = '@' + newName + ' | 500 Followers | 1000 Coins Earned'; }
+
+        function previewImage() { const file = document.getElementById('post-image').files[0]; const preview = document.getElementById('image-preview'); if (file) { const reader = new FileReader(); reader.onload = function(e) { preview.src = e.target.result; preview.style.display = 'block'; } reader.readAsDataURL(file); } }
     </script>
 </body>
 </html>
