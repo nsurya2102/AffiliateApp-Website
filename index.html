@@ -26,14 +26,29 @@
         .button-primary { background: #28a745; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 30px; display: inline-block; margin: 1rem 0; font-weight: 600; transition: background 0.3s ease; }
         .button-primary:hover { background: #218838; }
 
-        .page { display: none; }
-        .page.active { display: block; }
+        .feed { display: flex; flex-wrap: wrap; gap: 1rem; }
+        .post { background: #f9f9f9; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: calc(33% - 1rem); }
+        .post img { width: 100%; border-radius: 10px; }
+        .post p { margin: 0.5rem 0; font-size: 1rem; }
 
-        .back-button { background: #dc3545; color: #fff; padding: 0.5rem 1rem; text-decoration: none; border-radius: 30px; display: inline-block; margin-top: 1rem; font-weight: 600; }
-        .back-button:hover { background: #c82333; }
-
+        .coin-display { font-size: 1.2rem; font-weight: 700; margin: 1rem 0; }
     </style>
     <script>
+        let coins = 0;
+
+        function addCoins(amount) {
+            coins += amount;
+            document.getElementById('coin-count').innerText = coins;
+        }
+
+        function login() {
+            const name = document.getElementById('username').value;
+            if(name) {
+                document.getElementById('welcome').innerText = 'Welcome, ' + name + '!';
+                showPage('promote');
+            }
+        }
+
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -43,7 +58,7 @@
 <body>
     <nav>
         <a href="#home" onclick="showPage('home')">Home</a>
-        <a href="#signup" onclick="showPage('signup')">Sign Up</a>
+        <a href="#signup" onclick="showPage('signup')">Sign Up / Login</a>
         <a href="#promote" onclick="showPage('promote')">Promote Products</a>
         <a href="#earn" onclick="showPage('earn')">Earn Money</a>
         <a href="#contact" onclick="showPage('contact')">Contact</a>
@@ -60,21 +75,25 @@
     </div>
 
     <div id="signup" class="page">
-        <h2>Sign Up</h2>
-        <p>Join AffiliateApp and start earning money.</p>
-        <a href="#promote" class="button-primary" onclick="showPage('promote')">Next: Promote Products</a>
+        <h2>Sign Up / Login</h2>
+        <input type="text" id="username" placeholder="Enter your name">
+        <button onclick="login()">Login</button>
+        <p id="welcome"></p>
     </div>
 
     <div id="promote" class="page">
         <h2>Promote Products</h2>
-        <p>Select products and share them to earn money.</p>
-        <a href="#earn" class="button-primary" onclick="showPage('earn')">Next: Earn Money</a>
+        <div class="feed">
+            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 1</p><button onclick="addCoins(10)">Share + Earn 10 Coins</button></div>
+            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 2</p><button onclick="addCoins(15)">Share + Earn 15 Coins</button></div>
+            <div class="post"><img src="https://via.placeholder.com/300x200" alt="Product"><p>Product 3</p><button onclick="addCoins(20)">Share + Earn 20 Coins</button></div>
+        </div>
     </div>
 
     <div id="earn" class="page">
         <h2>Earn Money</h2>
-        <p>Track your earnings and request payouts.</p>
-        <a href="#home" class="back-button" onclick="showPage('home')">Home</a>
+        <p class="coin-display">Your Coins: <span id="coin-count">0</span></p>
+        <p>Use your coins to request payouts.</p>
     </div>
 
     <div id="contact" class="page">
