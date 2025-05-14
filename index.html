@@ -7,77 +7,37 @@
     <title>Brandost - Social Media Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f3f4f6; color: #333; }
-        nav { background: #0073e6; padding: 1rem; text-align: center; display: flex; justify-content: space-between; align-items: center; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f0f4f8; color: #333; }
+        nav { background: linear-gradient(90deg, #4A90E2, #50E3C2); padding: 1rem; text-align: center; display: flex; justify-content: space-between; align-items: center; }
         nav a { color: #fff; margin: 0 1rem; text-decoration: none; font-weight: 600; cursor: pointer; }
-        nav a:hover { color: #d4d4d8; }
+        nav a:hover { color: #ffdd57; }
         .logo { font-size: 1.5rem; font-weight: 700; color: #fff; }
 
-        .container { max-width: 800px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); display: none; }
+        .container { max-width: 800px; margin: 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); display: none; }
         .container.active { display: block; }
 
         .feed, .section { display: flex; flex-direction: column; gap: 1rem; }
-        .post, .group, .chat, .influencer { background: #e0f2fe; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; }
-        .post:hover, .group:hover, .chat:hover, .influencer:hover { transform: translateY(-5px); }
+        .post { background: #e6f7ff; padding: 1rem; border-radius: 15px; transition: transform 0.3s ease; border: 1px solid #d1e9ff; }
+        .post:hover { transform: translateY(-5px); background: #d0f0fd; }
 
-        footer { background: #0073e6; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
+        .post-actions { display: flex; justify-content: space-between; margin-top: 0.5rem; }
+        .reaction-btn { background: none; border: none; cursor: pointer; font-size: 1.2rem; margin-right: 5px; }
+        .reaction-btn:hover { transform: scale(1.2); }
+
+        footer { background: #4A90E2; color: #fff; text-align: center; padding: 1rem; margin-top: 2rem; }
     </style>
 </head>
-<body>
-    <nav>
-        <div class="logo">Brandost</div>
-        <div>
-            <a onclick="showPage('home')">Home</a>
-            <a onclick="showPage('explore')">Explore</a>
-            <a onclick="showPage('influencers')">Influencers</a>
-            <a onclick="showPage('chats')">Chats</a>
-            <a onclick="showPage('groups')">Groups</a>
-            <a onclick="showPage('earn')">Earn Money</a>
-            <a onclick="showPage('profile')">Profile</a>
-        </div>
-    </nav>
+<body onload="checkLogin()">
 
     <div id="home" class="container active">
         <h2>Create a Post</h2>
-        <div class="feed">
-            <div class="post">Welcome to Brandost! Share your thoughts and earn.</div>
+        <div class="create-post">
+            <input type="text" id="post-content" placeholder="What's on your mind?">
+            <button onclick="createPost()">Post</button>
         </div>
-    </div>
 
-    <div id="explore" class="container">
-        <h2>Explore Trending</h2>
-        <div class="feed">
-            <div class="post">#Trending - Exciting new posts here!</div>
-            <div class="post">#Tech - Latest gadgets and innovations.</div>
-        </div>
-    </div>
-
-    <div id="influencers" class="container">
-        <h2>Top Influencers</h2>
-        <div class="influencer">@InfluencerOne - 10,000 followers</div>
-    </div>
-
-    <div id="chats" class="container">
-        <h2>Your Chats</h2>
-        <div class="chat">@FriendOne - Hey, how are you?</div>
-    </div>
-
-    <div id="groups" class="container">
-        <h2>Your Groups</h2>
-        <div class="group">Travel Enthusiasts</div>
-    </div>
-
-    <div id="earn" class="container">
-        <h2>Earn Money</h2>
-        <p>Your Coins: <span id="coin-count">0</span> Coins</p>
-        <button onclick="requestPayout()">Request Payout</button>
-        <div id="history"></div>
-    </div>
-
-    <div id="profile" class="container">
-        <h2>Profile</h2>
-        <p>@YourName</p>
-        <button onclick="editProfile()">Edit Profile</button>
+        <h2>Your Feed</h2>
+        <div id="feed" class="feed"></div>
     </div>
 
     <footer>
@@ -85,30 +45,49 @@
     </footer>
 
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.container').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        let coins = 1000;
-        document.getElementById('coin-count').innerText = coins;
-
-        function requestPayout() {
-            if (coins >= 100) {
-                coins -= 100;
-                document.getElementById('coin-count').innerText = coins;
-                document.getElementById('history').innerHTML += `<p>Payout Requested - 100 Coins</p>`;
-            } else {
-                alert('You need at least 100 coins to request a payout.');
+        function createPost() {
+            const content = document.getElementById('post-content').value.trim();
+            if (content) {
+                const post = {
+                    content: content,
+                    reactions: { "🔥": 0, "😂": 0, "❤️": 0, "😎": 0, "🤯": 0 }
+                };
+                addPostToFeed(post);
+                document.getElementById('post-content').value = '';
             }
         }
 
-        function editProfile() {
-            let newName = prompt('Enter your new name:');
-            if (newName) {
-                document.querySelector('#profile p').innerText = '@' + newName;
-            }
+        function addPostToFeed(post) {
+            const feed = document.getElementById('feed');
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            postElement.innerHTML = `
+                <p>${post.content}</p>
+                <div class="post-actions">
+                    <button class="reaction-btn" onclick="react(this, '🔥')">🔥 <span>0</span></button>
+                    <button class="reaction-btn" onclick="react(this, '😂')">😂 <span>0</span></button>
+                    <button class="reaction-btn" onclick="react(this, '❤️')">❤️ <span>0</span></button>
+                    <button class="reaction-btn" onclick="react(this, '😎')">😎 <span>0</span></button>
+                    <button class="reaction-btn" onclick="react(this, '🤯')">🤯 <span>0</span></button>
+                </div>
+                <div class="comments" style="margin-top: 0.5rem;"></div>
+            `;
+            feed.prepend(postElement);
         }
+
+        function react(button, emoji) {
+            const count = button.querySelector('span');
+            count.textContent = parseInt(count.textContent) + 1;
+        }
+
+        // Sample Posts
+        const samplePosts = [
+            { content: "Just joined Brandost! Loving the vibes here.🔥", reactions: { "🔥": 5, "😂": 2, "❤️": 3, "😎": 1, "🤯": 0 } },
+            { content: "Anyone up for a chat? 😎", reactions: { "🔥": 3, "😂": 1, "❤️": 4, "😎": 2, "🤯": 1 } }
+        ];
+
+        samplePosts.forEach(post => addPostToFeed(post));
+
     </script>
 </body>
 </html>
