@@ -37,13 +37,13 @@
     <nav>
         <div class="logo">Brandost</div>
         <div>
-            <a href="#home" onclick="showPage('home')">Home</a>
-            <a href="#explore" onclick="showPage('explore')">Explore</a>
-            <a href="#influencers" onclick="showPage('influencers')">Influencers</a>
-            <a href="#chats" onclick="showPage('chats')">Chats</a>
-            <a href="#groups" onclick="showPage('groups')">Groups</a>
-            <a href="#earn" onclick="showPage('earn')">Earn Money</a>
-            <a href="#profile" onclick="showPage('profile')">Profile</a>
+            <a href="#" onclick="showPage('home')">Home</a>
+            <a href="#" onclick="showPage('explore')">Explore</a>
+            <a href="#" onclick="showPage('influencers')">Influencers</a>
+            <a href="#" onclick="showPage('chats')">Chats</a>
+            <a href="#" onclick="showPage('groups')">Groups</a>
+            <a href="#" onclick="showPage('earn')">Earn Money</a>
+            <a href="#" onclick="showPage('profile')">Profile</a>
         </div>
     </nav>
 
@@ -102,7 +102,10 @@
     </footer>
 
     <script>
-        function showPage(pageId) { document.querySelectorAll('.container').forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); }
+        function showPage(pageId) { 
+            document.querySelectorAll('.container').forEach(page => page.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+        }
 
         function createPost() { const content = document.getElementById('post-content').value.trim(); const image = document.getElementById('image-preview').src; const productLink = document.getElementById('post-product').value.trim(); if (content || image) { document.getElementById('feed').innerHTML += `<div class='post'>${content} ${image ? `<img src='${image}' class='image-preview'>` : ''} ${productLink ? `<a href='${productLink}' target='_blank' class='product-link'>View Product</a>` : ''}</div>`; document.getElementById('post-content').value = ''; document.getElementById('post-product').value = ''; document.getElementById('image-preview').src = ''; document.getElementById('image-preview').style.display = 'none'; } }
 
